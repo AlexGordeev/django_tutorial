@@ -1,12 +1,21 @@
 from django.contrib import admin
 
-from .models import News
+from .models import Category, News
 
 
 class NewsAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'created_at', 'updated_at', 'is_published')
+    list_display = ('id', 'title', 'category', 'created_at', 'updated_at', 'is_published')
     list_display_links = ('id', 'title')
+    list_editable = ('is_published',)
+    list_filter = ('category', 'is_published')
     search_fields = ('title', 'content')
 
 
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+    list_display_links = ('id', 'name')
+    search_fields = ('name',)
+
+
 admin.site.register(News, NewsAdmin)
+admin.site.register(Category, CategoryAdmin)
