@@ -3,13 +3,7 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block sidebar %}
-  <div class="list-group">
-    {% for category_item in categories %}
-      <a href="{% url 'category' category_item.pk %}" class="list-group-item list-group-item-action">
-        {{ category_item.name }}
-      </a>
-    {% endfor %}
-  </div>
+  {% include 'inc/_sidebar.html' %}
 {% endblock %}
 
 {% block content %}
