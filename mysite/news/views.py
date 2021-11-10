@@ -10,7 +10,7 @@ def index(request: HttpRequest) -> HttpResponse:
     context = {
         'news': news,
         'title': 'Новости',
-        'categories': categories
+        'categories': categories,
     }
     return render(request, 'news/index.html', context)
 
@@ -22,6 +22,6 @@ def get_category(request: HttpRequest, category_id: int) -> HttpResponse:
     context = {
         'news': news,
         'category': category,
-        'categories': categories
+        'categories': categories,
     }
     return render(request, 'news/category.html', context)

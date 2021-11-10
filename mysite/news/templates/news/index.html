@@ -3,7 +3,6 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block sidebar %}
-<div class="col-md-3">
   <div class="list-group">
     {% for category_item in categories %}
       <a href="{% url 'category' category_item.pk %}" class="list-group-item list-group-item-action">
@@ -11,11 +10,9 @@
       </a>
     {% endfor %}
   </div>
-</div>
 {% endblock %}
 
 {% block content %}
-<div class="col-md-9">
   {% for news_item in news %}
     <div class="card mb-3">
       <div class="card-header">
@@ -42,5 +39,4 @@
   {% empty %}
     Новостей нет
   {% endfor %}
-</div>
 {% endblock %}
