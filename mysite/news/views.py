@@ -21,3 +21,11 @@ def get_category(request: HttpRequest, category_id: int) -> HttpResponse:
         'category': category,
     }
     return render(request, 'news/category.html', context)
+
+
+def get_news_item(request: HttpRequest, news_id: int) -> HttpResponse:
+    news_item = News.objects.get(pk=news_id)
+    context = {
+        'news_item': news_item,
+    }
+    return render(request, 'news/news_item.html', context)
