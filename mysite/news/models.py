@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class News(models.Model):
@@ -21,6 +22,9 @@ class News(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=150, db_index=True, verbose_name='Наименование')
+
+    def get_absolute_url(self) -> str:
+        return reverse('category', kwargs={'category_id': self.pk})
 
     def __str__(self):
         return self.name

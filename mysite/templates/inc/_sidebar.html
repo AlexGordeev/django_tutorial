@@ -4,7 +4,7 @@
 <div class="list-group">
   {% get_categories as categories %}
   {% for category_item in categories %}
-    <a href="{% url 'category' category_item.pk %}" class="list-group-item list-group-item-action">
+    <a href="{{ category_item.get_absolute_url }}" class="list-group-item list-group-item-action">
       {{ category_item.name }}
     </a>
   {% endfor %}

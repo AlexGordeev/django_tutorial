@@ -12,5 +12,5 @@ def get_categories() -> list:
 
 
 @register.inclusion_tag('news/categories.html')
-def show_categories():
+def show_categories() -> dict:
     return {'categories': Category.objects.all()}
