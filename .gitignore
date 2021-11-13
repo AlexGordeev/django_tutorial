@@ -131,5 +131,6 @@ dmypy.json
 # PyCharm
 .idea/
 
-# media files
+# media and static files
 mysite/media/
+mysite/static/
