@@ -1,5 +1,5 @@
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import NewsForm
 from .models import Category, News
@@ -34,7 +34,10 @@ def get_news_item(request: HttpRequest, news_id: int) -> HttpResponse:
 
 def add_news(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
-        pass
+        form = NewsForm(request.POST)
+        if form.is_valid():
+            news = News.objects.create(**form.cleaned_data)
+            return redirect(news)
     else:
         form = NewsForm()
 
