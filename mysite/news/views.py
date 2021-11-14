@@ -1,6 +1,7 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, render
 
+from .forms import NewsForm
 from .models import Category, News
 
 
@@ -29,3 +30,16 @@ def get_news_item(request: HttpRequest, news_id: int) -> HttpResponse:
         'news_item': news_item,
     }
     return render(request, 'news/news_item.html', context)
+
+
+def add_news(request: HttpRequest) -> HttpResponse:
+    if request.method == 'POST':
+        pass
+    else:
+        form = NewsForm()
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'news/add_news.html', context)
