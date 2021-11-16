@@ -12,17 +12,14 @@
       Категория: <a href="{{ news_item.category.get_absolute_url }}">{{ news_item.category }}</a>
     </div>
     <div class="card-body">
-      <div class="media">
-        {% if news_item.photo %}
-          <img class="mr-3" src="{{ news_item.photo.url }}" alt="no photo" width="350">
-        {% else %}
-          <img class="mr-3" src="https://picsum.photos/id/1060/350/235/?blur=2" alt="no photo">
-        {% endif %}
-        <div class="media-body">
-          <h5 class="card-title">{{ news_item.title }}</h5>
-          <p class="card-text">{{ news_item.content|linebreaks }}</p>
-        </div>
-      </div>
+      {% if news_item.photo %}
+        <img class="float-lg-start me-3" src="{{ news_item.photo.url }}" alt="no photo" width="350">
+      {% else %}
+        <img class="float-lg-start me-3" src="https://picsum.photos/id/1060/350/235/?blur=2" alt="no photo">
+      {% endif %}
+
+      <h5 class="card-title">{{ news_item.title }}</h5>
+      <p class="card-text">{{ news_item.content|linebreaks }}</p>
     </div>
     <div class="card-footer text-muted">
       {{ news_item.created_at|date:"Y-m-d H:i" }}
