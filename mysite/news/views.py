@@ -1,17 +1,23 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic import ListView
 
 from .forms import NewsForm
 from .models import Category, News
 
 
-def index(request: HttpRequest) -> HttpResponse:
-    news = News.objects.all()
-    context = {
-        'news': news,
-        'title': 'Новости',
-    }
-    return render(request, 'news/index.html', context)
+class HomeNews(ListView):
+    model = News
+    template_name = 'news/home_news_list.html'
+    context_object_name = 'news'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Главная страница'
+        return context
+
+    def get_queryset(self):
+        return News.objects.filter(is_published=True)
 
 
 def get_category(request: HttpRequest, category_id: int) -> HttpResponse:
