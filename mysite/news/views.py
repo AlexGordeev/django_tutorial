@@ -1,6 +1,6 @@
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import ListView
+from django.shortcuts import redirect, render
+from django.views.generic import DetailView, ListView
 
 from .forms import NewsForm
 from .models import Category, News
@@ -36,12 +36,10 @@ class NewsByCategory(ListView):
         return News.objects.filter(category_id=self.kwargs.get('category_id'), is_published=True)
 
 
-def get_news_item(request: HttpRequest, news_id: int) -> HttpResponse:
-    news_item = get_object_or_404(News, pk=news_id)
-    context = {
-        'news_item': news_item,
-    }
-    return render(request, 'news/news_item.html', context)
+class NewsItem(DetailView):
+    model = News
+    template_name = 'news/news_item_detail.html'
+    context_object_name = 'news_item'
 
 
 def add_news(request: HttpRequest) -> HttpResponse:
