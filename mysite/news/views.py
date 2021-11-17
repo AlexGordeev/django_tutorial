@@ -1,6 +1,4 @@
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import redirect, render
-from django.views.generic import DetailView, ListView
+from django.views.generic import CreateView, DetailView, ListView
 
 from .forms import NewsForm
 from .models import Category, News
@@ -42,14 +40,6 @@ class NewsItem(DetailView):
     context_object_name = 'news_item'
 
 
-def add_news(request: HttpRequest) -> HttpResponse:
-    if request.method == 'POST':
-        form = NewsForm(request.POST)
-        if form.is_valid():
-            news = form.save()
-            return redirect(news)
-    else:
-        form = NewsForm()
-
-    context = {'form': form}
-    return render(request, 'news/add_news.html', context)
+class CreateNewsItem(CreateView):
+    form_class = NewsForm
+    template_name = 'news/create_news_item.html'
