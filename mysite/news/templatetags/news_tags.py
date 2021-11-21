@@ -16,6 +16,6 @@ def get_categories() -> list:
 def show_categories() -> dict:
     return {
         'categories': Category.objects
-            .annotate(cnt=Count('news', filter=Q(news__is_published=True)))
-            .filter(cnt__gt=0),
+                              .annotate(cnt=Count('news', filter=Q(news__is_published=True)))
+                              .filter(cnt__gt=0),
     }
