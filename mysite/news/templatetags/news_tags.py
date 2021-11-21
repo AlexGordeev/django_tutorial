@@ -1,5 +1,5 @@
 from django import template
-from django.db.models import Count
+from django.db.models import Count, Q
 
 from news.models import Category
 
@@ -14,4 +14,8 @@ def get_categories() -> list:
 
 @register.inclusion_tag('news/categories.html')
 def show_categories() -> dict:
-    return {'categories': Category.objects.annotate(cnt=Count('news')).filter(cnt__gt=0)}
+    return {
+        'categories': Category.objects
+            .annotate(cnt=Count('news', filter=Q(news__is_published=True)))
+            .filter(cnt__gt=0),
+    }
