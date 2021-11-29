@@ -1,25 +1,29 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, DetailView, ListView
 
 from .forms import NewsForm
 from .models import Category, News
+from .utils import MyMixin
 
 
-class HomeNews(ListView):
+class HomeNews(MyMixin, ListView):
     model = News
     template_name = 'news/home_news_list.html'
     context_object_name = 'news'
+    mixin_prop = 'hello world'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Главная страница'
+        context['title'] = self.get_upper('Главная страница')
         context['has_link'] = True
+        context['mixin_prop'] = self.get_prop()
         return context
 
     def get_queryset(self):
         return News.objects.filter(is_published=True).select_related('category')
 
 
-class NewsByCategory(ListView):
+class NewsByCategory(MyMixin, ListView):
     model = News
     template_name = 'news/home_news_list.html'
     context_object_name = 'news'
@@ -42,6 +46,7 @@ class NewsItem(DetailView):
     context_object_name = 'news_item'
 
 
-class CreateNewsItem(CreateView):
+class CreateNewsItem(LoginRequiredMixin, CreateView):
     form_class = NewsForm
     template_name = 'news/create_news_item.html'
+    raise_exception = True
