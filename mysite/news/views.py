@@ -10,13 +10,11 @@ class HomeNews(MyMixin, ListView):
     model = News
     template_name = 'news/home_news_list.html'
     context_object_name = 'news'
-    mixin_prop = 'hello world'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = self.get_upper('Главная страница')
         context['has_link'] = True
-        context['mixin_prop'] = self.get_prop()
         return context
 
     def get_queryset(self):
