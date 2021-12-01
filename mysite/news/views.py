@@ -1,18 +1,17 @@
 from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView, DetailView, ListView
 
-from .forms import NewsForm
+from .forms import NewsForm, UserRegisterForm
 from .models import Category, News
 from .utils import MyMixin
 
 
 def register(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Регистрация прошла успешно')
@@ -20,7 +19,7 @@ def register(request: HttpRequest) -> HttpResponse:
         else:
             messages.error(request, 'Ошибка регистрации')
     else:
-        form = UserCreationForm()
+        form = UserRegisterForm()
 
     return render(request, 'news/register.html', {'form': form})
 
