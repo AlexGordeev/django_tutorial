@@ -14,9 +14,9 @@ def register(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Регистрация прошла успешно')
-            return redirect('login')
+            user = form.save()
+            login(request, user)
+            return redirect('home')
         else:
             messages.error(request, 'Ошибка регистрации')
     else:
