@@ -1,11 +1,13 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import send_mail
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView, DetailView, ListView
 
-from .forms import NewsForm, UserLoginForm, UserRegisterForm
+from .forms import ContactForm, NewsForm, UserLoginForm, UserRegisterForm
 from .models import Category, News
 from .utils import MyMixin
 
@@ -43,6 +45,30 @@ def user_login(request: HttpRequest) -> HttpResponse:
 def user_logout(request: HttpRequest) -> HttpResponse:
     logout(request)
     return redirect('login')
+
+
+def send_email(request: HttpRequest) -> HttpResponse:
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            result = send_mail(
+                form.cleaned_data.get('subject'),
+                form.cleaned_data.get('content'),
+                settings.EMAIL_HOST_USER,
+                ['metalfan665@rambler.ru'],
+                fail_silently=True,
+            )
+            if result:
+                messages.success(request, 'Письмо отправлено')
+                return redirect('home')
+            else:
+                messages.error(request, 'Ошибка отправки')
+        else:
+            messages.error(request, 'Ошибка при заполнении полей')
+    else:
+        form = ContactForm()
+
+    return render(request, 'news/send_email.html', {'form': form})
 
 
 class HomeNews(MyMixin, ListView):

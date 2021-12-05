@@ -141,3 +141,13 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 INTERNAL_IPS = ['127.0.0.1']
+
+
+# Email settings
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_HOST_USER = 'aleksei.gordeev.86@yandex.ru'
+EMAIL_HOST_PASSWORD = 'email_password'  # TODO: read from config
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_USE_TLS = False
