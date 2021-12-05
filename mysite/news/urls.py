@@ -1,11 +1,11 @@
 from django.urls import path
 
-from .views import CreateNewsItem, HomeNews, NewsByCategory, NewsItem, register, login
+from .views import CreateNewsItem, HomeNews, NewsByCategory, NewsItem, register, user_login
 
 
 urlpatterns = [
     path('register/', register, name='register'),
-    path('login/', login, name='login'),
+    path('login/', user_login, name='login'),
     path('', HomeNews.as_view(), name='home'),
     path('category/<int:category_id>/', NewsByCategory.as_view(), name='category'),
     path('news/<int:pk>/', NewsItem.as_view(), name='news_item'),
