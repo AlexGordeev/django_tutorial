@@ -40,6 +40,11 @@ def user_login(request: HttpRequest) -> HttpResponse:
     return render(request, 'news/login.html', {'form': form})
 
 
+def user_logout(request: HttpRequest) -> HttpResponse:
+    logout(request)
+    return redirect('login')
+
+
 class HomeNews(MyMixin, ListView):
     model = News
     template_name = 'news/home_news_list.html'
