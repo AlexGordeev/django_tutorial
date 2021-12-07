@@ -12,20 +12,18 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 
-from django.core.management.utils import get_random_secret_key
+from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_random_secret_key()
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool, default=False)
 
 ALLOWED_HOSTS = []
 
@@ -212,9 +210,9 @@ INTERNAL_IPS = ['127.0.0.1']
 
 # Email settings
 
-EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_HOST_USER = 'aleksei.gordeev.86@yandex.ru'
-EMAIL_HOST_PASSWORD = 'email_password'  # TODO: read from config
-EMAIL_PORT = 465
-EMAIL_USE_SSL = True
-EMAIL_USE_TLS = False
+EMAIL_HOST = config('EMAIL_HOST', default='localhost')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+EMAIL_PORT = config('EMAIL_PORT', cast=int, default=465)
+EMAIL_USE_SSL = config('EMAIL_USE_SSL', cast=bool, default=True)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool, default=False)
