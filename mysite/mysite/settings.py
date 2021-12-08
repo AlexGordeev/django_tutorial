@@ -216,3 +216,17 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 EMAIL_PORT = config('EMAIL_PORT', cast=int, default=465)
 EMAIL_USE_SSL = config('EMAIL_USE_SSL', cast=bool, default=True)
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool, default=False)
+
+
+# Cache settings
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': Path(BASE_DIR).joinpath('django_cache'),
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000,
+        },
+        'TIMEOUT': 60,
+    },
+}
